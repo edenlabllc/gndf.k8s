@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: gndf
+  name: landing
+  labels:
+    app: "landing"
+    version: "1.0.1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "landing"
+  template:
+    metadata:
+      labels:
+        app: "landing"
+        version: "1.0.1"
+    spec:
+      containers:
+      - name: gndf-landing-web
+        image: nebo15/gandalf.landing.web:1.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: PORT
+          value: "8080"
+        - name: CABINET_URL
+          value: "https://apps.gndf.io"
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 60
+      imagePullSecrets:
+      - name: docker-hub-secret
+      dnsPolicy: ClusterFirst

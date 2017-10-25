@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: gndf
+  name: fe
+  labels:
+    app: "fe"
+    version: "1.0.2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "fe"
+  template:
+    metadata:
+      labels:
+        app: "fe"
+        version: "1.0.2"
+    spec:
+      containers:
+      - name: gndf-web
+        image: nebo15/gandalf.web:1.0.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: PORT
+          value: "8080"
+        - name: API_ENDPOINT
+          value: "https://api.gndf.io"
+        - name: API_CLIENTID
+          value: "admin"
+        - name: API_CLIENTSECRET
+          value: "vqj66myg6xfp"
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 60
+      imagePullSecrets:
+      - name: docker-hub-secret
+      dnsPolicy: ClusterFirst
