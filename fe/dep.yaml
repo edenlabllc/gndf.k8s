@@ -29,11 +29,11 @@ spec:
         - name: PORT
           value: "8080"
         - name: API_ENDPOINT
-          value: "https://api-gndf.ehealth.world"
+          value: "http://api-gndf.ehealth.world"
         - name: API_CLIENTID
           value: "admin"
         - name: API_CLIENTSECRET
-          value: "vqj66myg6xfp"
+          value: ";W~^:|=!;k_~.l3^QQ:_WE"
         readinessProbe:
           failureThreshold: 6
           httpGet:
