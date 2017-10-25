@@ -5,7 +5,7 @@ metadata:
   name: api
   labels:
     app: "api"
-    version: "1.1.3"
+    version: "1.1.4"
 spec:
   replicas: 1
   selector:
@@ -15,12 +15,12 @@ spec:
     metadata:
       labels:
         app: "api"
-        version: "1.1.3"
+        version: "1.1.4"
       annotations:
         pod.beta.kubernetes.io/init-containers: '[
             {
                 "name": "gndf-api-init",
-                "image": "nebo15/gandalf.api:1.1.3",
+                "image": "edenlabllc/gandalf.api:1.1.4",
                 "imagePullPolicy": "IfNotPresent",
                 "command": ["/bin/sh", "-c"],
                 "args": ["cp -r /app /tmp && chmod -R 777 /tmp/app"],
@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: gndf-api
-        image: nebo15/gandalf.api:1.1.3
+        image: edenlabllc/gandalf.api:1.1.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9000
@@ -60,7 +60,6 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
-        - containerPort: 443
         volumeMounts:
         - name: nginx-config-volume
           mountPath: /etc/nginx/conf.d
