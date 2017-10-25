@@ -55,6 +55,10 @@ spec:
           value: ""
         - name: APP_DEBUG
           value: "false"
+        - name: TOKEN_ADMIN_PW
+          value: ";W~^:|=!;k_~.l3^QQ:_WE"
+        - name: TOKEN_CONSUMER_PW
+          value: "Cd_%_|wz2LG%C~|!yb03=u"
       - name: gndf-nginx
         image: nginx:1.11.10-alpine
         imagePullPolicy: IfNotPresent
