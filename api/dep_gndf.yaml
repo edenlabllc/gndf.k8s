@@ -59,6 +59,19 @@ spec:
           value: ";W~^:|=!;k_~.l3^QQ:_WE"
         - name: TOKEN_CONSUMER_PW
           value: "Cd_%_|wz2LG%C~|!yb03=u"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+        limits:
+          cpu: 2
+          memory: 1Gi
+      readinessProbe:
+        tcpSocket:
+          port: 9000
+        failureThreshold: 6
+        periodSeconds: 10
+        successThreshold: 1
       - name: gndf-nginx
         image: nginx:1.11.10-alpine
         imagePullPolicy: IfNotPresent
@@ -69,6 +82,24 @@ spec:
           mountPath: /etc/nginx/conf.d
         - name: shared-app
           mountPath: /app
+        readinessProbe:
+          httpGet:
+            path: "/api"
+            port: 80
+            scheme: HTTP
+          failureThreshold: 6
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/api"
+            port: 80
+            scheme: HTTP
+          failureThreshold: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 60
       volumes:
         - name: nginx-config-volume
           configMap:
