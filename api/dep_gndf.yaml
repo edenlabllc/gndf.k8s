@@ -79,24 +79,6 @@ spec:
           mountPath: /etc/nginx/conf.d
         - name: shared-app
           mountPath: /app
-        readinessProbe:
-          httpGet:
-            path: "/api"
-            port: 80
-            scheme: HTTP
-          failureThreshold: 6
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: "/api"
-            port: 80
-            scheme: HTTP
-          failureThreshold: 3
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 60
       volumes:
         - name: nginx-config-volume
           configMap:
