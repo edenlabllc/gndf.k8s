@@ -55,6 +55,39 @@ spec:
           value: ""
         - name: APP_DEBUG
           value: "true"
+        # Postmark
+        - name: EMAIL_ENABLED
+          value: "true"
+        - name: POSTMARK_TOKEN
+          value: "4b0de40a-3c17-4424-85d7-4cf0dc396a97"
+        - name: POSTMARK_SENDER_EMAIL
+          value: "support@gndf.io"
+        - name: POSTMARK_TEMPLATE_WELCOME_ID
+          value: "689382"
+        - name: POSTMARK_TEMPLATE_RESET_PASSWORD_ID
+          value: "689401"
+        - name: POSTMARK_TEMPLATE_INVITE_ID
+          value: "743701"
+        # Links
+        - name: LINK_DUMP_PROJECT
+          value: "http://api-gndf.ehealth.world/dump"
+        - name: LINK_CONFIRMATION_EMAIL
+          value: "http://apps-gndf.ehealth.world/#/activate/{code}"
+        - name: LINK_RESET_PASSWORD
+          value: "http://apps-gndf.ehealth.world/#/reset/confirm?token={code}"
+        - name: LINK_INVITE
+          value: "http://apps-gndf.ehealth.world/#/sign-up"
+        - name: LINK_ADMIN_VARIANT
+          value: "743701"
+        # Metrics
+        - name: STATUS_DPM_LINK
+          value: "http://status-gndf.ehealth.world/api/v1/metrics/1/points"
+        - name: STATUS_ACCESS_TOKEN
+          value: "8enNc604AI1JVL96Ll4v"
+        - name: INTERCOM_ENABLED
+          value: "false"
+        - name: MIXPANEL_ENABLED
+          value: "false"
         resources:
           requests:
             cpu: 100m
