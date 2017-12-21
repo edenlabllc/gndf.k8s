@@ -34,6 +34,8 @@ spec:
           requests:
             cpu: 200m
             memory: 512Mi
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
       volumes:
       - name: db-data
         persistentVolumeClaim:

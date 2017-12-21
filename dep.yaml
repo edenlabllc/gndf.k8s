@@ -1,0 +1,123 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: api
+    version: 1.1.7
+  name: api
+  namespace: gndf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: api
+        version: 1.1.7
+    spec:
+      containers:
+      - env:
+        - name: DB_CONNECTION
+          value: mongodb
+        - name: DB_HOST
+          value: db-svc
+        - name: DB_PORT
+          value: "27017"
+        - name: DB_DATABASE
+          value: gndf
+        - name: DB_USERNAME
+        - name: DB_PASSWORD
+        - name: APP_DEBUG
+          value: "true"
+        - name: APP_ENV
+          value: prod
+        - name: EMAIL_ENABLED
+          value: "true"
+        - name: POSTMARK_TOKEN
+          value: 4b0de40a-3c17-4424-85d7-4cf0dc396a97
+        - name: POSTMARK_SENDER_EMAIL
+          value: support@gndf.io
+        - name: POSTMARK_TEMPLATE_WELCOME_ID
+          value: "689382"
+        - name: POSTMARK_TEMPLATE_RESET_PASSWORD_ID
+          value: "689401"
+        - name: POSTMARK_TEMPLATE_INVITE_ID
+          value: "743701"
+        - name: LINK_DUMP_PROJECT
+          value: http://api-gndf.ehealth.world/dump
+        - name: LINK_CONFIRMATION_EMAIL
+          value: http://apps-gndf.ehealth.world/#/activate/{code}
+        - name: LINK_RESET_PASSWORD
+          value: http://apps-gndf.ehealth.world/#/reset/confirm?token={code}
+        - name: LINK_INVITE
+          value: http://apps-gndf.ehealth.world/#/sign-up
+        - name: LINK_ADMIN_VARIANT
+          value: "743701"
+        - name: STATUS_DPM_LINK
+          value: http://status-gndf.ehealth.world/api/v1/metrics/1/points
+        - name: STATUS_ACCESS_TOKEN
+          value: 8enNc604AI1JVL96Ll4v
+        - name: INTERCOM_ENABLED
+          value: "false"
+        - name: MIXPANEL_ENABLED
+          value: "false"
+        image: edenlabllc/gandalf.api:1.1.7
+        imagePullPolicy: IfNotPresent
+        name: gndf-api
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: 9000
+          timeoutSeconds: 10
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+      - image: nginx:1.11.10-alpine
+        imagePullPolicy: IfNotPresent
+        name: gndf-nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: nginx-config-volume
+        - mountPath: /app
+          name: shared-app
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - cp -r /app /tmp && chmod -R 777 /tmp/app
+        command:
+        - /bin/sh
+        - -c
+        image: edenlabllc/gandalf.api:1.1.7
+        imagePullPolicy: IfNotPresent
+        name: gndf-api-init
+        volumeMounts:
+        - mountPath: /tmp/app
+          name: shared-app
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: nginx-api-gndf
+        name: nginx-config-volume
+      - emptyDir: {}
+        name: shared-app

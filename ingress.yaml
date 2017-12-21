@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gndf-svc
+  namespace: gndf
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: gndf.ehealth.world
+    http:
+      paths:
+       - path: 
+         backend:
+          serviceName: landing-svc
+          servicePort: 80
+  - host: api-gndf.ehealth.world
+    http:
+      paths:
+       - path: 
+         backend:
+          serviceName: api-svc
+          servicePort: 80
+  - host:  apps-gndf.ehealth.world
+    http:
+      paths:
+       - path: 
+         backend:
+          serviceName: fe-svc
+          servicePort: 80

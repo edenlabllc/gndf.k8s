@@ -52,6 +52,5 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 60
-      imagePullSecrets:
-      - name: docker-hub-secret
-      dnsPolicy: ClusterFirst
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
