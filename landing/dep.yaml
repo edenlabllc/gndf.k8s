@@ -29,7 +29,7 @@ spec:
         - name: PORT
           value: "8080"
         - name: CABINET_URL
-          value: "http://apps-gndf.ehealth.world"
+          value: "https://apps-gndf.ehealth.world"
         readinessProbe:
           failureThreshold: 6
           httpGet:

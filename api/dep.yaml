@@ -51,17 +51,17 @@ spec:
         - name: POSTMARK_TEMPLATE_INVITE_ID
           value: "743701"
         - name: LINK_DUMP_PROJECT
-          value: http://api-gndf.ehealth.world/dump
+          value: https://api-gndf.ehealth.world/dump
         - name: LINK_CONFIRMATION_EMAIL
-          value: http://apps-gndf.ehealth.world/#/activate/{code}
+          value: https://apps-gndf.ehealth.world/#/activate/{code}
         - name: LINK_RESET_PASSWORD
-          value: http://apps-gndf.ehealth.world/#/reset/confirm?token={code}
+          value: https://apps-gndf.ehealth.world/#/reset/confirm?token={code}
         - name: LINK_INVITE
-          value: http://apps-gndf.ehealth.world/#/sign-up
+          value: https://apps-gndf.ehealth.world/#/sign-up
         - name: LINK_ADMIN_VARIANT
           value: "743701"
         - name: STATUS_DPM_LINK
-          value: http://status-gndf.ehealth.world/api/v1/metrics/1/points
+          value: https://status-gndf.ehealth.world/api/v1/metrics/1/points
         - name: STATUS_ACCESS_TOKEN
           value: 8enNc604AI1JVL96Ll4v
         - name: INTERCOM_ENABLED

@@ -102,11 +102,15 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 10
+        nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
       - name: gndf-nginx
         image: nginx:1.11.10-alpine
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
+        nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
         volumeMounts:
         - name: nginx-config-volume
           mountPath: /etc/nginx/conf.d
